@@ -7,15 +7,25 @@ namespace CredAbility.Checkout.Concrete
     public class CheckOut : ICheckout
     {
         private readonly List<string> _basket;
+        private readonly ISKURepository _skuRepository;
 
-        public CheckOut()
+        public CheckOut(ISKURepository skuRepository)
         {
             _basket = new List<string>();
+            _skuRepository = skuRepository;
         }
 
         public int GetTotalPrice()
         {
-            return 0;
+            var total = 0;
+
+            foreach (var item in _basket)
+            {
+                var sku = _skuRepository.Get(item);
+                total += sku?.UnitPrice ?? 0;
+            }
+
+            return total;
         }
 
         public void Scan(string item)
