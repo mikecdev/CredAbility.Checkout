@@ -97,5 +97,37 @@ namespace CredAbility.Checkout.Tests
 
             Assert.AreEqual(110, result);
         }
+
+        [Test]
+        public void ScanBSpecialQuantityMultipleTimesAndOdd50PercentOddQuantity_Calculate_MultiBSpecialPriceAndRegularPriceReturn()
+        {
+            _checkout.Scan("B");
+            _checkout.Scan("B");
+            _checkout.Scan("B");
+            _checkout.Scan("C");
+            _checkout.Scan("B");
+            _checkout.Scan("B");
+            var result = _checkout.GetTotalPrice();
+
+            Assert.AreEqual(140, result);
+        }
+
+        [Test]
+        public void ScanASpecialQuantityMultipleTimesAnd75PercentOddQuantity_Calculate_MultiASpecialPriceAndRegularPriceReturn()
+        {
+            _checkout.Scan("A");
+            _checkout.Scan("A");
+            _checkout.Scan("A");
+
+            _checkout.Scan("A");
+            _checkout.Scan("A");
+            _checkout.Scan("A");
+
+            _checkout.Scan("A");
+            _checkout.Scan("A");
+            var result = _checkout.GetTotalPrice();
+
+            Assert.AreEqual(360, result);
+        }
     }
 }

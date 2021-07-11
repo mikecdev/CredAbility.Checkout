@@ -40,18 +40,24 @@ namespace CredAbility.Checkout.Concrete
         private int CalculatePrice(IGrouping<string, string> group)
         {
             var specialPrice = _skuSpecialPriceRepository?.Get(group.Key);
+            var quantity = group.Count();
+            var total = 0;
 
-            if (specialPrice != null && specialPrice.Quantity <= group.Count())
+            if (specialPrice != null && specialPrice.Quantity <= quantity)
             {
-                return specialPrice.SpecialPrice * (group.Count() / specialPrice.Quantity);
+                var multiDiscountQuantity = (quantity / specialPrice.Quantity);
+                total = specialPrice.SpecialPrice * multiDiscountQuantity;
+
+                quantity = quantity % specialPrice.Quantity;
             }
-            else
+            
+            if (quantity > 0)
             {
                 var sku = _skuRepository.Get(group.Key);
-                return sku?.UnitPrice * group.Count() ?? 0;
+                total+= sku?.UnitPrice * quantity ?? 0;
             }
 
-
+            return total;
         }
 
         public void Scan(string item)
