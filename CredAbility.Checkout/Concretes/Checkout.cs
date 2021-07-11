@@ -48,7 +48,7 @@ namespace CredAbility.Checkout.Concrete
             else
             {
                 var sku = _skuRepository.Get(group.Key);
-                return sku?.UnitPrice ?? 0;
+                return sku?.UnitPrice * group.Count() ?? 0;
             }
 
 

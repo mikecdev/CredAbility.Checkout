@@ -38,5 +38,51 @@ namespace CredAbility.Checkout.Tests
             Assert.AreEqual(95, result);
         }
 
+        [Test]
+        public void ScanItemAQuantityLessThanSpecialQuantity_Calculate_FullPriceTimesQuantityReturn()
+        {
+            _checkout.Scan("A");
+            _checkout.Scan("A");
+            var result = _checkout.GetTotalPrice();
+
+            Assert.AreEqual(100, result);
+        }
+
+        [Test]
+        public void ScanItemCMultipleNotQuantitySpecial_Calculate_FullPriceTimesQuantityReturn()
+        {
+            _checkout.Scan("C");
+            _checkout.Scan("C");
+            _checkout.Scan("C");
+            var result = _checkout.GetTotalPrice();
+
+            Assert.AreEqual(60, result);
+        }
+
+        [Test]
+        public void ScanMultiItemsAAnyOrderForDiscountTotal_Calculate_SpecialPriceReturn()
+        {
+            _checkout.Scan("A");
+            _checkout.Scan("C");
+            _checkout.Scan("A");
+            _checkout.Scan("D");
+            _checkout.Scan("A");
+            var result = _checkout.GetTotalPrice();
+
+            Assert.AreEqual(165, result);
+        }
+
+        [Test]
+        public void ScanMultiItemsABAnyOrderForMultiDiscountTotal_Calculate_MultiSpecialPriceReturn()
+        {
+            _checkout.Scan("A");
+            _checkout.Scan("B");
+            _checkout.Scan("A");
+            _checkout.Scan("B");
+            _checkout.Scan("A");
+            var result = _checkout.GetTotalPrice();
+
+            Assert.AreEqual(175, result);
+        }
     }
 }
