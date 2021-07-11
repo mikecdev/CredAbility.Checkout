@@ -43,7 +43,7 @@ namespace CredAbility.Checkout.Concrete
 
             if (specialPrice != null && specialPrice.Quantity <= group.Count())
             {
-                return specialPrice.SpecialPrice;
+                return specialPrice.SpecialPrice * (group.Count() / specialPrice.Quantity);
             }
             else
             {

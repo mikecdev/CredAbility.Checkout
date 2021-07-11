@@ -84,5 +84,18 @@ namespace CredAbility.Checkout.Tests
 
             Assert.AreEqual(175, result);
         }
+
+        [Test]
+        public void ScanSameItemBMultipleTimes_Calculate_MultiBSpecialPriceReturn()
+        {
+            _checkout.Scan("B");
+            _checkout.Scan("B");
+            _checkout.Scan("B");
+            _checkout.Scan("C");
+            _checkout.Scan("B");
+            var result = _checkout.GetTotalPrice();
+
+            Assert.AreEqual(110, result);
+        }
     }
 }
