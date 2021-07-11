@@ -2,13 +2,18 @@
 using CredAbility.Checkout.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace CredAbility.Checkout.Repository
 {
     public class SKURepositoryMock : ISKURepository
     {
         private readonly List<SKUItem> _skuList;
+
+        public SKURepositoryMock()
+        {
+            _skuList = new List<SKUItem>();
+        }
 
         public void AddItem(SKUItem skuItem)
         {
@@ -26,7 +31,7 @@ namespace CredAbility.Checkout.Repository
 
         public SKUItem Get(string sku)
         {
-            throw new NotImplementedException();
+            return _skuList.Where(x => x.SKU == sku).FirstOrDefault();
         }
     }
 }

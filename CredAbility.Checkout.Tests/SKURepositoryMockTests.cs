@@ -37,5 +37,24 @@ namespace CredAbility.Checkout.Tests
             var ex = Assert.Throws<ArgumentException>(() => _skuRepository.AddItem(new SKUItem() { SKU = "A", UnitPrice = 0 }));
             Assert.That(ex.Message, Is.EqualTo("skuItem.UnitPrice cannot be 0."));
         }
+
+        [Test]
+        public void AddItem_GetItem_AreSameReturned()
+        {
+            var actual = new SKUItem() { SKU = "A", UnitPrice = 50 };
+            _skuRepository.AddItem(actual);
+
+            Assert.AreSame(_skuRepository.Get("A"), actual);
+        }
+
+        [Test]
+        public void AddItem_GetItem_AreNotSameReturned()
+        {
+            var actual = new SKUItem() { SKU = "A", UnitPrice = 50 };
+            _skuRepository.AddItem(actual);
+
+
+            Assert.AreNotSame(_skuRepository.Get("B"), actual);
+        }
     }
 }
