@@ -1,7 +1,7 @@
 using CredAbility.Checkout.Concrete;
 using CredAbility.Checkout.Interfaces;
 using CredAbility.Checkout.Models;
-using CredAbility.Checkout.Repository;
+using CredAbility.Checkout.Repositories;
 using NUnit.Framework;
 using System;
 

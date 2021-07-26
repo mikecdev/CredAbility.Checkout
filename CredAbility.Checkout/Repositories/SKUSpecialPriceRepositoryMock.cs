@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CredAbility.Checkout.Repositories
+namespace ThinkMoney.Checkout.Repositories
 {
     public class SKUSpecialPriceRepositoryMock : ISKUSpecialPriceRepository
     {

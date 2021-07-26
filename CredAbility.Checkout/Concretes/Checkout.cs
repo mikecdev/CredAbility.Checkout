@@ -1,5 +1,5 @@
 ﻿using CredAbility.Checkout.Interfaces;
-using CredAbility.Checkout.Repository;
+using CredAbility.Checkout.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +48,7 @@ namespace CredAbility.Checkout.Concrete
                 var multiDiscountQuantity = (quantity / specialPrice.Quantity);
                 total = specialPrice.SpecialPrice * multiDiscountQuantity;
 
-                quantity = quantity % specialPrice.Quantity;
+                quantity %= specialPrice.Quantity;
             }
             
             if (quantity > 0)
