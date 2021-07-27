@@ -1,4 +1,5 @@
 using CredAbility.Checkout.Concrete;
+using CredAbility.Checkout.Constants;
 using CredAbility.Checkout.Interfaces;
 using CredAbility.Checkout.Models;
 using CredAbility.Checkout.Repositories;
@@ -37,7 +38,7 @@ namespace CredAbility.Checkout.Tests
         {
 
             var ex = Assert.Throws<ArgumentNullException>(() => _checkout.Scan(null));
-            Assert.That(ex.Message, Is.EqualTo("Value cannot be null. (Parameter 'item cannot be null or whitespace')"));
+            Assert.That(ex.Message, Is.EqualTo($"{Message.VALUE_CANNOT_BE_NULL} (Parameter '{Message.ITEM_CANNOT_BE_NULL_OR_WHITESPACE}')"));
         }
 
         [Test]

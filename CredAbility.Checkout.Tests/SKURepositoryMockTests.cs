@@ -1,4 +1,5 @@
-﻿using CredAbility.Checkout.Interfaces;
+﻿using CredAbility.Checkout.Constants;
+using CredAbility.Checkout.Interfaces;
 using CredAbility.Checkout.Models;
 using CredAbility.Checkout.Repositories;
 using NUnit.Framework;
@@ -21,21 +22,28 @@ namespace CredAbility.Checkout.Tests
         public void AddNullItem_ThrowsArgumentNullException()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => _skuRepository.AddItem(null));
-            Assert.That(ex.Message, Is.EqualTo("Value cannot be null. (Parameter 'skuItem')"));
+            Assert.That(ex.Message, Is.EqualTo($"{Message.VALUE_CANNOT_BE_NULL} (Parameter 'skuItem')"));
         }
 
         [Test]
         public void AddItemSKUNull_ThrowsArgumentSKUNullException()
         {
             var ex = Assert.Throws<ArgumentException>(() => _skuRepository.AddItem(new SKUItem() { UnitPrice = 50 }));
-            Assert.That(ex.Message, Is.EqualTo("skuItem.SKU cannot be null or whitespace."));
+            Assert.That(ex.Message, Is.EqualTo($"skuItem.SKU {Message.CANNOT_BE_NULL_OR_WHITESPACE}"));
         }
 
         [Test]
         public void AddItemPriceZero_ThrowsArgumentSKUUnitPriceZeroException()
         {
             var ex = Assert.Throws<ArgumentException>(() => _skuRepository.AddItem(new SKUItem() { SKU = "A", UnitPrice = 0 }));
-            Assert.That(ex.Message, Is.EqualTo("skuItem.UnitPrice cannot be 0."));
+            Assert.That(ex.Message, Is.EqualTo($"skuItem.UnitPrice {Message.CANNOT_BE_LESSTHAN_OR_EQUAL_ZERO}"));
+        }
+
+        [Test]
+        public void AddItemPriceNegative_ThrowsArgumentSKUUnitPriceZeroException()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => _skuRepository.AddItem(new SKUItem() { SKU = "A", UnitPrice = -1 }));
+            Assert.That(ex.Message, Is.EqualTo($"skuItem.UnitPrice {Message.CANNOT_BE_LESSTHAN_OR_EQUAL_ZERO}"));
         }
 
         [Test]

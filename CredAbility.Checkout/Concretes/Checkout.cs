@@ -1,4 +1,5 @@
-﻿using CredAbility.Checkout.Interfaces;
+﻿using CredAbility.Checkout.Constants;
+using CredAbility.Checkout.Interfaces;
 using CredAbility.Checkout.Repositories;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace CredAbility.Checkout.Concrete
             _skuRepository = skuRepository;
         }
 
-        public CheckOut(ISKURepository skuRepository, SKUSpecialPriceRepositoryMock skuSpecialPriceRepository) : this(skuRepository)
+        public CheckOut(ISKURepository skuRepository, ISKUSpecialPriceRepository skuSpecialPriceRepository) : this(skuRepository)
         {
             _skuSpecialPriceRepository = skuSpecialPriceRepository;
         }
@@ -63,7 +64,7 @@ namespace CredAbility.Checkout.Concrete
         public void Scan(string item)
         {
             if (string.IsNullOrWhiteSpace(item))
-                throw new ArgumentNullException("item cannot be null or whitespace");
+                throw new ArgumentNullException(Message.ITEM_CANNOT_BE_NULL_OR_WHITESPACE);
 
             _basket.Add(item);
         }

@@ -1,4 +1,5 @@
-﻿using CredAbility.Checkout.Interfaces;
+﻿using CredAbility.Checkout.Constants;
+using CredAbility.Checkout.Interfaces;
 using CredAbility.Checkout.Models;
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,11 @@ namespace CredAbility.Checkout.Repositories
             if (skuItem == null)
                 throw new ArgumentNullException(nameof(skuItem));
 
-            if (skuItem.SKU == null)
-                throw new ArgumentException($"{nameof(skuItem)}.{nameof(skuItem.SKU)} cannot be null or whitespace.");
+            if (string.IsNullOrWhiteSpace(skuItem.SKU))
+                throw new ArgumentException($"{nameof(skuItem)}.{nameof(skuItem.SKU)} {Message.CANNOT_BE_NULL_OR_WHITESPACE}");
 
-            if (skuItem.UnitPrice == 0)
-                throw new ArgumentException($"{nameof(skuItem)}.{nameof(skuItem.UnitPrice)} cannot be 0.");
+            if (skuItem.UnitPrice <= 0)
+                throw new ArgumentException($"{nameof(skuItem)}.{nameof(skuItem.UnitPrice)} {Message.CANNOT_BE_LESSTHAN_OR_EQUAL_ZERO}");
 
             _skuList.Add(skuItem);
         }
